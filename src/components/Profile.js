@@ -42,7 +42,7 @@ function Profile() {
         withCredentials: true,
       });
       toast.success("Details Updated succesfully");
-      setCurrentUser(res.data);
+      console.log(res.data)
       setEditMode((prev) => ({ ...prev, [field]: false }));
     } catch (error) {
       if(error.response)
