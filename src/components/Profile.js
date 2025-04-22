@@ -8,7 +8,7 @@ function Profile() {
   const [description, setDescription] = useState("A short description about the user.");
   const [editMode, setEditMode] = useState({ name: false, email: false });
   const [profileImage, setProfileImage] = useState("");
-  const [currentUser, setCurrentUser] = useState({});
+  
 
   const handleEditToggle = (field) => {
     setEditMode((prev) => ({ ...prev, [field]: !prev[field] }));
@@ -22,7 +22,7 @@ function Profile() {
         const res = await axios.get("https://messangerback.onrender.com/api/user/getuser", {
           withCredentials: true,
         });
-        setCurrentUser(res.data);
+        
         setName(res.data.name);
         setEmail(res.data.email);
         setProfileImage(res.data.profile);
