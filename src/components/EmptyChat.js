@@ -1,7 +1,7 @@
 import React from "react";
 
 function EmptyChat() {
-  const logo = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg";
+  const logo = "/images/profile.webp";
 
   return (
     <div

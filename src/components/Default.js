@@ -1,7 +1,7 @@
 import React from 'react';
 
 function Default() {
-  const logo = "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"; // Your logo URL
+  const logo = "/images/profile.webp"; // Your logo URL
 
   return (
     <div className="w-full h-[70vh] relative bg-white flex items-center justify-center overflow-hidden">

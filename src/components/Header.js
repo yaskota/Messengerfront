@@ -11,15 +11,14 @@ function Header() {
   console.log("header :",user)
   useEffect(()=>{
     setProfilePhoto(user?.profile || prof)
-    
-  },[user])
-  
 
+},[user])
+  
   return (
     <div className="flex justify-between items-center px-6 py-4 shadow-md bg-gradient-to-r from-purple-500 via-blue-500 to-indigo-500 text-white">
       <h1 className="text-xl font-bold tracking-wide">Messenger</h1>
-      <div className="flex items-center gap-4">
-        {user ? (
+      <div className="flex items-center gap-4">                     
+        {user ? (   
           <>
             <img
               src={profilePhoto}
