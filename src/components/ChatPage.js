@@ -6,8 +6,8 @@ import axios from "axios";
 import io from "socket.io-client";
 
 function ChatPage({ selectedUser, onBack }) {
-  const prof = "https://www.w3schools.com/howto/img_avatar.png";
-  const userProfile = "https://randomuser.me/api/portraits/men/1.jpg";
+  const prof = "/images/photo1.jpg";
+  const userProfile = "/images/photo2.jpg";
 
   const [currentUser, setCurrentUser] = useState({});
   const [messages, setMessages] = useState([]);

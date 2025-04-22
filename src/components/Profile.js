@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 function Profile() {
-  const defaultImage = "https://randomuser.me/api/portraits/men/1.jpg";
+  const defaultImage = "/images/photo2.jpg";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("A short description about the user.");

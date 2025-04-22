@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useState } from "react";
 
 function Header() {
-  const prof = "https://randomuser.me/api/portraits/men/1.jpg";
+  const prof = "/images/photo2.jpg";
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [profilePhoto,setProfilePhoto]=useState("")
