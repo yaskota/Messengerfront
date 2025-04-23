@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function UserList({ onUserSelect, selectedUser }) {
-  const prof = '/images/photo1.jpg';
+  const prof = '/images/profilephoto1.jpg';
   const [user, setUser] = useState([]);
 
   useEffect(() => {
