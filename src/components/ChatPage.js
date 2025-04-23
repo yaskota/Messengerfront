@@ -18,6 +18,8 @@ function ChatPage({ selectedUser, onBack }) {
   const socket = useRef(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+
+  
   const inputRef = useRef(null);
 
   // Auto scroll

@@ -1,7 +1,7 @@
 import React from "react";
 
 function EmptyChat() {
-  const logo = "/images/profile.webp";
+  const logo = "/images/photo2.jpg";
 
   return (
     <div
