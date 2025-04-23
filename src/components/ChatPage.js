@@ -18,23 +18,22 @@ function ChatPage({ selectedUser, onBack }) {
   const socket = useRef(null);
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
-
-  
   const inputRef = useRef(null);
 
-  // Auto scroll
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Fetch current user
   useEffect(() => {
     const fetchUser = async () => {
       try {
         axios.defaults.withCredentials = true;
-        const res = await axios.get("https://messangerback.onrender.com/api/user/getuser", {
-          withCredentials: true,
-        });
+        const res = await axios.get(
+          "https://messangerback.onrender.com/api/user/getuser",
+          {
+            withCredentials: true,
+          }
+        );
         setCurrentUser(res.data);
       } catch (err) {
         console.error("User fetch error:", err);
@@ -43,7 +42,6 @@ function ChatPage({ selectedUser, onBack }) {
     fetchUser();
   }, []);
 
-  // Connect socket
   useEffect(() => {
     if (!currentUser?._id) return;
 
@@ -65,7 +63,6 @@ function ChatPage({ selectedUser, onBack }) {
     return () => socket.current.disconnect();
   }, [currentUser, selectedUser]);
 
-  // Fetch previous chat messages
   useEffect(() => {
     const fetchMessages = async () => {
       if (!selectedUser) return;
@@ -89,16 +86,11 @@ function ChatPage({ selectedUser, onBack }) {
     fetchMessages();
   }, [selectedUser]);
 
-  // Handle sending messages
   const handleSend = () => {
     if (!socket.current || !selectedUser) return;
 
-    const timestamp = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    const timestamp = new Date().toISOString();
 
-    // Send image
     if (image) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -121,7 +113,6 @@ function ChatPage({ selectedUser, onBack }) {
       reader.readAsDataURL(image);
     }
 
-    // Send text
     if (input.trim()) {
       const msg = {
         sender: currentUser._id,
@@ -139,7 +130,6 @@ function ChatPage({ selectedUser, onBack }) {
       setMessages((prev) => [...prev, msg]);
     }
 
-    // Reset inputs
     setInput("");
     setImage(null);
     setPreviewImage(null);
@@ -174,20 +164,31 @@ function ChatPage({ selectedUser, onBack }) {
           />
           <div>
             <div className="font-semibold text-base">{selectedUser.name}</div>
-            <div className="text-sm text-gray-200">Last seen recently</div>
+            <div className="text-sm text-gray-200">
+              {selectedUser.lastseen
+                ? `Last seen at ${new Date(
+                    selectedUser.lastseen
+                  ).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}`
+                : "Last seen unknown"}
+            </div>
           </div>
         </div>
         <MdCall size={24} className="cursor-pointer hover:text-green-400" />
       </div>
 
       {/* Messages */}
-      <div className="flex-1 p-4 overflow-y-auto bg-gray-50 space-y-4">
+      <div className="flex-1 p-4 overflow-y-auto bg-indigo-50 space-y-4">
         {messages.map((msg, idx) => {
           const isMe = msg.sender === currentUser._id;
           return (
             <div
               key={idx}
-              className={`flex items-end ${isMe ? "justify-end" : "justify-start"}`}
+              className={`flex items-end ${
+                isMe ? "justify-end" : "justify-start"
+              }`}
             >
               {!isMe && (
                 <img
@@ -199,7 +200,7 @@ function ChatPage({ selectedUser, onBack }) {
               <div
                 className={`max-w-xs px-4 py-2 rounded-2xl shadow ${
                   isMe
-                    ? "bg-gray-300 text-black rounded-bl-none"
+                    ? "bg-purple-200 text-black rounded-bl-none"
                     : "bg-purple-500 text-white rounded-br-none"
                 }`}
               >
@@ -211,8 +212,17 @@ function ChatPage({ selectedUser, onBack }) {
                   />
                 )}
                 {msg.content && <p>{msg.content}</p>}
-                <p className="text-[10px] text-right text-gray-200 mt-1">
-                  {msg.timestamp}
+                <p
+                  className={`text-[10px] text-right mt-1 ${
+                    isMe ? "text-gray-500" : "text-purple-200"
+                  }`}
+                >
+                  {msg.timestamp
+                    ? new Date(msg.timestamp).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })
+                    : ""}
                 </p>
               </div>
               {isMe && (
@@ -229,14 +239,14 @@ function ChatPage({ selectedUser, onBack }) {
       </div>
 
       {/* Input Section */}
-      <div className="flex items-center gap-2 p-3 border-t bg-white">
+      <div className="flex items-center gap-2 p-3 border-t bg-indigo-100">
         <input
           ref={inputRef}
           type="text"
           value={input}
           placeholder="Type a message"
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:outline-none"
+          className="flex-1 px-4 py-2 rounded-full border border-indigo-300 focus:outline-none"
         />
         <input
           ref={fileInputRef}
@@ -246,7 +256,10 @@ function ChatPage({ selectedUser, onBack }) {
           className="hidden"
           id="file-upload"
         />
-        <label htmlFor="file-upload" className="cursor-pointer bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200 transition">
+        <label
+          htmlFor="file-upload"
+          className="cursor-pointer bg-indigo-200 px-3 py-2 rounded-full hover:bg-indigo-300 transition"
+        >
           📎
         </label>
         <button
@@ -259,7 +272,7 @@ function ChatPage({ selectedUser, onBack }) {
 
       {/* Image preview */}
       {previewImage && (
-        <div className="p-2 text-center bg-gray-100">
+        <div className="p-2 text-center bg-indigo-100">
           <p className="text-sm mb-1">Image ready to send:</p>
           <img
             src={previewImage}
