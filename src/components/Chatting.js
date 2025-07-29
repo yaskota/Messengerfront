@@ -1,42 +1,48 @@
-import React, { useState } from 'react';
+// Chatting.js
+import React, { useState, useEffect } from 'react';
 import UserList from './UserList';
 import ChatPage from './ChatPage';
 import Default from './Default';
 
 function Chatting() {
   const [selectedUser, setSelectedUser] = useState(null);
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive layout
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768); // Tailwind md breakpoint
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleUserSelect = (user) => {
     setSelectedUser(user);
-    setShowSidebar(false); // Hide sidebar on mobile
   };
 
   const handleBack = () => {
-    setShowSidebar(true);   // Show sidebar again
-    setSelectedUser(null);  // Optional: clear selected user
+    setSelectedUser(null);
   };
 
   return (
     <div className="flex h-[calc(100vh-75px)] w-full overflow-hidden">
       {/* Sidebar (UserList) */}
-      {(!selectedUser || showSidebar) && (
+      {(isMobile ? !selectedUser : true) && (
         <div className="w-full md:w-1/3 lg:w-1/4 border-r bg-white">
           <UserList onUserSelect={handleUserSelect} selectedUser={selectedUser} />
         </div>
       )}
 
-      {/* Chat View (ChatPage or Default) */}
-      {selectedUser && !showSidebar && (
+      {/* Chat View */}
+      {(selectedUser || !isMobile) && (
         <div className="flex-1">
-          <ChatPage selectedUser={selectedUser} onBack={handleBack} />
-        </div>
-      )}
-
-      {/* Large screen default view when no user is selected */}
-      {!selectedUser && !showSidebar && (
-        <div className="flex-1 hidden md:flex">
-          <Default />
+          {selectedUser ? (
+            <ChatPage selectedUser={selectedUser} onBack={handleBack} />
+          ) : (
+            <div className="hidden md:flex h-full">
+              <Default />
+            </div>
+          )}
         </div>
       )}
     </div>
