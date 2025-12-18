@@ -36,64 +36,69 @@ function Login() {
   };
 
   return (
-    // Changed h-[calc(100vh-75px)] to min-h-screen to avoid overflow issues on mobile
-    <div className="min-h-screen w-full bg-gradient-to-br from-green-100 via-blue-100 to-purple-200 flex items-center justify-center p-4">
-      
-      {/* Container: Max-width keeps it from stretching too far on desktop */}
-      <form 
-        onSubmit={handlogin}
-        className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md space-y-6 flex flex-col"
+  <div style={{ 
+    minHeight: '100vh', 
+    width: '100%', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center', 
+    padding: '20px',
+    background: 'linear-gradient(to bottom right, #dcfce7, #dbeafe, #e9d5ff)' 
+  }}>
+    <form 
+      onSubmit={handlogin}
+      className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md flex flex-col space-y-6"
+      style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
+    >
+      <h2 className="text-3xl font-bold text-center text-purple-700">Login</h2>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Email Address</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+        />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Password</label>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+        />
+      </div>
+
+      <div className="text-right">
+        <Link to="/otp" className="text-sm text-purple-600 hover:underline">
+          Forgot Password?
+        </Link>
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all shadow-lg active:scale-95"
       >
-        <h2 className="text-3xl font-extrabold text-center text-purple-700">Login</h2>
+        Sign In
+      </button>
 
-        <div className="space-y-1">
-          <label className="block text-sm font-semibold text-gray-700">Email Address</label>
-          <input
-            type="email"
-            placeholder="Enter your email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-          />
-        </div>
-
-        <div className="space-y-1">
-          <label className="block text-sm font-semibold text-gray-700">Password</label>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
-          />
-        </div>
-
-        <div className="text-right">
-          <Link to="/otp" className="text-sm text-purple-600 hover:text-purple-800 hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transform active:scale-[0.98] transition-all shadow-lg"
-        >
-          Sign In
-        </button>
-
-        <p className="text-sm text-center text-gray-600 mt-4">
-          Don’t have an account?{' '}
-          <Link to="/register" className="text-purple-600 hover:underline font-bold">
-            Sign up
-          </Link>
-        </p>
-      </form>
-
-      <ToastContainer position="top-center" autoClose={2000} />
-    </div>
-  );
+      <p className="text-sm text-center text-gray-700 mt-2">
+        Don’t have an account?{' '}
+        <Link to="/register" className="text-purple-600 hover:underline font-medium">
+          Sign up
+        </Link>
+      </p>
+    </form>
+    <ToastContainer />
+  </div>
+);
 }
 
 export default Login;
