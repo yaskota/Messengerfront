@@ -1,91 +1,97 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import axios from 'axios'
+import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Ensure this is imported!
+
 function Login() {
   const { setUser } = useAuth();
-  const navigate=useNavigate()
-  const [email,setEmail]=useState("")
-  const [password,setPassword]=useState("")
-  const handlogin=async(e)=>{
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handlogin = async (e) => {
+    e.preventDefault(); // Moved to top for consistency
     try {
-      e.preventDefault();
       axios.defaults.withCredentials = true;
-      const user={
-        email,password
-      }
-      const result=await axios.post('https://messangerback.onrender.com/api/user/login',user,{ withCredentials: true });
+      const user = { email, password };
+      
+      const result = await axios.post('https://messangerback.onrender.com/api/user/login', user, { 
+        withCredentials: true 
+      });
+
       toast.success(result.data.message);
-      console.log(result.data.message)
       setUser(result.data.user);
-      setTimeout(()=>{
-        
-        navigate('/chatting')
-      },2000)
+      
+      setTimeout(() => {
+        navigate('/chatting');
+      }, 2000);
       
     } catch (error) {
-      if(error.response)
-        {
-          toast.error(error.response.data.message);
-        }
-        else
-        {
-          toast.error("something went wrong")
-        }
-        console.log("error occur in the deleting student data")
+      const errorMsg = error.response?.data?.message || "Something went wrong";
+      toast.error(errorMsg);
+      console.error("Login Error:", error);
     }
-  }
-  return (
-    <div className="w-screen h-[calc(100vh-75px)] bg-white flex items-center justify-center relative bg-gradient-to-br from-green-100 via-blue-100 to-purple-200">
-      <form className="bg-white p-6 rounded-xl shadow-2xl w-full h-full sm:h-auto sm:w-full sm:max-w-md space-y-4 flex flex-col justify-center">
-        <h2 className="text-2xl font-bold text-center text-purple-700">Login</h2>
+  };
 
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Email</label>
+  return (
+    // Changed h-[calc(100vh-75px)] to min-h-screen to avoid overflow issues on mobile
+    <div className="min-h-screen w-full bg-gradient-to-br from-green-100 via-blue-100 to-purple-200 flex items-center justify-center p-4">
+      
+      {/* Container: Max-width keeps it from stretching too far on desktop */}
+      <form 
+        onSubmit={handlogin}
+        className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md space-y-6 flex flex-col"
+      >
+        <h2 className="text-3xl font-extrabold text-center text-purple-700">Login</h2>
+
+        <div className="space-y-1">
+          <label className="block text-sm font-semibold text-gray-700">Email Address</label>
           <input
             type="email"
             placeholder="Enter your email"
+            required
             value={email}
-            onChange={(e)=>{setEmail(e.target.value)}}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
           />
         </div>
 
-        <div>
-          <label className="block mb-1 text-sm font-medium text-gray-700">Password</label>
+        <div className="space-y-1">
+          <label className="block text-sm font-semibold text-gray-700">Password</label>
           <input
             type="password"
             placeholder="Enter your password"
+            required
             value={password}
-            onChange={(e)=>{setPassword(e.target.value)}}
-            className="w-full px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all"
           />
         </div>
 
         <div className="text-right">
-          <Link to="/otp" className="text-sm text-purple-600 hover:underline">
+          <Link to="/otp" className="text-sm text-purple-600 hover:text-purple-800 hover:underline">
             Forgot Password?
           </Link>
         </div>
 
         <button
-          type="submit" onClick={handlogin}
-          className="w-full bg-purple-600 text-white py-1.5 rounded-lg hover:bg-purple-700 transition"
+          type="submit"
+          className="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transform active:scale-[0.98] transition-all shadow-lg"
         >
-          Submit
+          Sign In
         </button>
 
-        {/* ✅ Signup prompt */}
-        <p className="text-sm text-center text-gray-700 mt-2">
+        <p className="text-sm text-center text-gray-600 mt-4">
           Don’t have an account?{' '}
-          <Link to="/register" className="text-purple-600 hover:underline font-medium">
+          <Link to="/register" className="text-purple-600 hover:underline font-bold">
             Sign up
           </Link>
         </p>
       </form>
-      <ToastContainer /> 
+
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 }
