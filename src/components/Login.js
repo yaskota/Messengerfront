@@ -37,63 +37,62 @@ function Login() {
 
   return (
   <div style={{ 
-    minHeight: '100vh', 
-    width: '100%', 
+    height: '100vh', 
+    width: '100vw', 
     display: 'flex', 
     alignItems: 'center', 
-    justifyContent: 'center', 
-    padding: '20px',
-    background: 'linear-gradient(to bottom right, #dcfce7, #dbeafe, #e9d5ff)' 
+    justifyContent: 'center',
+    background: 'linear-gradient(to bottom right, #dcfce7, #dbeafe, #e9d5ff)',
+    padding: '20px'
   }}>
+    {/* Explicitly setting max-width and margin auto to prevent stretching */}
     <form 
       onSubmit={handlogin}
-      className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md flex flex-col space-y-6"
-      style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)' }}
+      className="bg-white shadow-2xl rounded-2xl flex flex-col"
+      style={{ 
+        width: '100%', 
+        maxWidth: '400px', 
+        padding: '2rem',
+        gap: '1.5rem',
+        boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)' 
+      }}
     >
-      <h2 className="text-3xl font-bold text-center text-purple-700">Login</h2>
+      <h2 className="text-3xl font-bold text-center text-purple-700 m-0">Login</h2>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-700">Email Address</label>
+        <label className="text-sm font-semibold text-gray-600">Email</label>
         <input
           type="email"
-          placeholder="Enter your email"
-          required
+          placeholder="Enter email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl outline-none focus:border-purple-500"
+          style={{ height: '45px' }} // Explicit height
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm font-medium text-gray-700">Password</label>
+        <label className="text-sm font-semibold text-gray-600">Password</label>
         <input
           type="password"
-          placeholder="Enter your password"
-          required
+          placeholder="Enter password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-400"
+          className="w-full px-4 py-3 border border-gray-300 rounded-xl outline-none focus:border-purple-500"
+          style={{ height: '45px' }} // Explicit height
         />
-      </div>
-
-      <div className="text-right">
-        <Link to="/otp" className="text-sm text-purple-600 hover:underline">
-          Forgot Password?
-        </Link>
       </div>
 
       <button
         type="submit"
-        className="w-full bg-purple-600 text-white py-3 rounded-xl font-bold hover:bg-purple-700 transition-all shadow-lg active:scale-95"
+        className="w-full bg-purple-600 text-white font-bold rounded-xl hover:bg-purple-700 transition-all"
+        style={{ height: '50px', marginTop: '10px' }}
       >
         Sign In
       </button>
 
-      <p className="text-sm text-center text-gray-700 mt-2">
-        Don’t have an account?{' '}
-        <Link to="/register" className="text-purple-600 hover:underline font-medium">
-          Sign up
-        </Link>
+      <p className="text-sm text-center text-gray-500">
+        Don't have an account? <Link to="/register" className="text-purple-600 font-bold">Sign up</Link>
       </p>
     </form>
     <ToastContainer />
