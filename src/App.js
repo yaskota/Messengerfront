@@ -29,7 +29,7 @@ function App() {
       <AuthProvider>
         <Header />
         <Routes>
-          <Route path="/" element={<RootRoute />} />
+          <Route path="/" element={<Default />} />
 
           {/* Auth related */}
           <Route path="/login" element={<Login />} />
@@ -39,11 +39,9 @@ function App() {
 
           {/* User & chat related */}
           <Route path="/profile" element={<Profile />} />
-          <Route path="/userlist" element={<UserList />} />
-          <Route path="/chatpage" element={<ChatPage />} />
-          <Route path="/emptychat" element={<EmptyChat />} />
+
           <Route path="/chatting" element={<Chatting />} />
-          <Route path="/default" element={<Default />} />
+          
         </Routes>
       </AuthProvider>
     </BrowserRouter>
