@@ -18,7 +18,15 @@ function Header() {
       {/* Brand Section with Google Colors */}
       <div 
         className="flex items-center gap-1 cursor-pointer" 
-        onClick={() => navigate("/chatting")}
+        onClick={()=>{
+          if(user==null)
+          {
+            navigate("/login")
+          }
+          else{
+            navigate("/chatting")
+          }
+        }}
       >
         <h1 className="text-xl font-medium tracking-tight flex">
           <span className="text-blue-500">M</span>

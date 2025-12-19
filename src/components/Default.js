@@ -1,8 +1,12 @@
 import React from 'react';
 import { Lock, Smartphone } from 'lucide-react';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Default() {
   const logo = "/images/photo2.jpg";
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div className="w-full h-screen relative bg-[#f8f9fa] flex flex-col items-center justify-center border-l border-gray-200">
@@ -33,7 +37,15 @@ function Default() {
         </p>
 
         {/* Action Button (Mimicking the real WhatsApp Web) */}
-        <button className="bg-green-600 hover:bg-green-700 text-white font-medium px-8 py-2.5 rounded-full transition-all active:scale-95 shadow-md">
+        <button onClick={()=>{
+          if(user==null)
+          {
+            navigate("/login")
+          }
+          else{
+            navigate("/chatting")
+          }
+        }} className="bg-green-600 hover:bg-green-700 text-white font-medium px-8 py-2.5 rounded-full transition-all active:scale-95 shadow-md">
           Get the app
         </button>
       </div>
