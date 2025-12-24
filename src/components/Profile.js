@@ -75,7 +75,7 @@ function Profile() {
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 p-6">
+    <div className="h-[calc(100vh-64px)] w-full flex items-center justify-center bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 p-6">
       <div className="bg-white shadow-2xl rounded-[32px] w-full max-w-lg p-8 border border-white/50 relative overflow-hidden">
         
         {/* Background Accent */}

@@ -9,7 +9,7 @@ function Default() {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-screen relative bg-[#f8f9fa] flex flex-col items-center justify-center border-l border-gray-200">
+    <div className="w-full h-[calc(100vh-64px)] relative bg-[#f8f9fa] flex flex-col items-center justify-center border-l border-gray-200">
       
       {/* Background Decorative Element */}
       
@@ -51,7 +51,7 @@ function Default() {
       </div>
 
       {/* Footer Branding */}
-      <div className="absolute bottom-12 flex flex-col items-center gap-4">
+      <div className="absolute bottom-5 flex flex-col items-center gap-4">
         <div className="flex items-center gap-2 text-gray-400 text-sm tracking-wide">
           <Lock size={14} className="mb-0.5" />
           <span className="uppercase text-[10px] font-bold">End-to-end encrypted</span>
